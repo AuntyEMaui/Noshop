@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="No Shop Challenge">
+<title>30-Day No-Shop Challenge 🌺</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f7f2eb;
+    --warm-white: #fdfaf6;
+    --teal: #2a7a6e;
+    --teal-light: #e0f0ee;
+    --coral: #c96a4a;
+    --coral-light: #faeae4;
+    --gold: #b8913a;
+    --gold-light: #faf3e0;
+    --dark: #2c2420;
+    --mid: #7a6a62;
+    --light-line: #e8ddd4;
+    --success: #2a7a6e;
+    --success-bg: #e0f0ee;
+    --slip: #c0392b;
+    --slip-bg: #fdecea;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--sand);
+    color: var(--dark);
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    color: var(--warm-white);
+    padding: 36px 24px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(42,122,110,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(201,106,74,0.2) 0%, transparent 50%);
+  }
+
+  .header-inner { position: relative; z-index: 1; }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 8px;
+    font-weight: 300;
+    opacity: 0.85;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  h1 em { font-style: italic; color: #e8a882; }
+
+  .header-sub {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 200;
+    margin-bottom: 20px;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative; z-index: 1;
+  }
+
+  .stat {
+    padding: 12px 8px;
+    text-align: center;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .stat-val {
+    font-size: 22px;
+    font-weight: 500;
+    display: block;
+    color: var(--warm-white);
+  }
+
+  .stat-val.green { color: #7dd4c8; }
+  .stat-val.coral { color: #e8a882; }
+
+  .stat-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--warm-white);
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--light-line);
+  }
+
+  .progress-track {
+    height: 6px;
+    background: var(--light-line);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), #4aaa9a);
+    border-radius: 99px;
+    transition: width 0.6s ease;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+  }
+
+  /* MAIN CONTENT */
+  .main { padding: 16px; }
+
+  /* CALENDAR */
+  .calendar-section {
+    background: var(--warm-white);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 1px solid var(--light-line);
+  }
+
+  .cal-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--dark);
+    padding: 8px 4px 6px;
+  }
+
+  .cal-day-name {
+    text-align: center;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    padding: 12px 8px;
+  }
+
+  .day-cell {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    color: var(--mid);
+    background: var(--sand);
+    border: 1.5px solid transparent;
+    transition: all 0.15s;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .day-cell:active { transform: scale(0.92); }
+
+  .day-cell.today {
+    border-color: var(--teal);
+    color: var(--teal);
+    font-weight: 500;
+    background: var(--teal-light);
+  }
+
+  .day-cell.success {
+    background: var(--success-bg);
+    border-color: var(--teal);
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .day-cell.success::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+
+  .day-cell.slip {
+    background: var(--slip-bg);
+    border-color: var(--slip);
+    color: var(--slip);
+  }
+
+  .day-cell.future {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .day-cell.selected {
+    outline: 3px solid var(--gold);
+    outline-offset: 1px;
+  }
+
+  .day-cell.blank { background: transparent; cursor: default; pointer-events: none; }
+
+  /* ACTION BUTTONS */
+  .action-section {
+    background: var(--warm-white);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--light-line);
+  }
+
+  .action-hint {
+    font-size: 12px;
+    color: var(--mid);
+    text-align: center;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  .btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    padding: 14px 12px;
+    border-radius: 12px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Jost', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn:active { transform: scale(0.96); }
+
+  .btn-success {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1.5px solid rgba(42,122,110,0.3);
+  }
+
+  .btn-slip {
+    background: var(--slip-bg);
+    color: var(--slip);
+    border: 1.5px solid rgba(192,57,43,0.3);
+  }
+
+  .btn-clear {
+    background: var(--sand);
+    color: var(--mid);
+    border: 1.5px solid var(--light-line);
+    grid-column: 1 / -1;
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  /* MILESTONE SECTION */
+  .milestones {
+    background: var(--warm-white);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--light-line);
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--mid);
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  .milestone-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--light-line);
+  }
+
+  .milestone-item:last-child { border-bottom: none; }
+
+  .m-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+    background: var(--sand);
+    color: var(--mid);
+    border: 1.5px solid var(--light-line);
+    transition: all 0.3s;
+  }
+
+  .m-badge.earned {
+    background: var(--gold-light);
+    color: var(--gold);
+    border-color: rgba(184,145,58,0.4);
+    font-size: 16px;
+  }
+
+  .m-text { font-size: 13px; color: var(--dark); line-height: 1.4; }
+  .m-sub { font-size: 11px; color: var(--mid); margin-top: 2px; }
+
+  /* TIP BOX */
+  .tip-box {
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .tip-teal { background: var(--teal-light); color: var(--teal); border-left: 3px solid var(--teal); border-radius: 0 14px 14px 0; }
+  .tip-gold { background: var(--gold-light); color: var(--gold); border-left: 3px solid var(--gold); border-radius: 0 14px 14px 0; }
+  .tip-coral { background: var(--coral-light); color: var(--coral); border-left: 3px solid var(--coral); border-radius: 0 14px 14px 0; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: rgba(44,36,32,0.35);
+    letter-spacing: 0.1em;
+  }
+
+  .flower { font-size: 20px; display: block; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="eyebrow">April 15 — May 14, 2026</div>
+    <h1>No-Shop <em>Challenge</em></h1>
+    <div class="header-sub">30 days · paying myself first 🌺</div>
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-val green" id="stat-strong">0</span>
+        <span class="stat-label">Strong days</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val" id="stat-remain">30</span>
+        <span class="stat-label">Days left</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val coral" id="stat-saved">$0</span>
+        <span class="stat-label">Est. saved</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+  <div class="progress-label" id="progress-label">0 of 30 days logged — tap a day to get started</div>
+</div>
+
+<div class="main">
+
+  <!-- CALENDAR -->
+  <div class="calendar-section">
+    <div class="cal-header">
+      <div class="cal-day-name">Sun</div>
+      <div class="cal-day-name">Mon</div>
+      <div class="cal-day-name">Tue</div>
+      <div class="cal-day-name">Wed</div>
+      <div class="cal-day-name">Thu</div>
+      <div class="cal-day-name">Fri</div>
+      <div class="cal-day-name">Sat</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-section">
+    <div class="action-hint" id="action-hint">Select a day above to log it</div>
+    <div class="btn-row">
+      <button class="btn btn-success" onclick="markDay('success')">Strong day</button>
+      <button class="btn btn-slip" onclick="markDay('slip')">Had a slip</button>
+    </div>
+    <button class="btn btn-clear" onclick="markDay('clear')">Clear selected day</button>
+  </div>
+
+  <!-- TIP -->
+  <div class="tip-box tip-teal" id="tip-box">
+    Groceries, gas, and bills don't count — those are life. A "strong day" means no clothes, jewelry, or non-essential shopping. You've got this! 🌺
+  </div>
+
+  <!-- MILESTONES -->
+  <div class="milestones">
+    <div class="section-eyebrow">Milestones</div>
+
+    <div class="milestone-item">
+      <div class="m-badge" id="m1">7</div>
+      <div>
+        <div class="m-text">One week strong</div>
+        <div class="m-sub">Your brain's shopping habit is starting to rewire</div>
+      </div>
+    </div>
+
+    <div class="milestone-item">
+      <div class="m-badge" id="m2">14</div>
+      <div>
+        <div class="m-text">Two weeks done</div>
+        <div class="m-sub">The urge to browse gets noticeably weaker around here</div>
+      </div>
+    </div>
+
+    <div class="milestone-item">
+      <div class="m-badge" id="m3">21</div>
+      <div>
+        <div class="m-text">Three weeks — new habit forming</div>
+        <div class="m-sub">This is where new routines start to feel natural</div>
+      </div>
+    </div>
+
+    <div class="milestone-item">
+      <div class="m-badge" id="m4">30</div>
+      <div>
+        <div class="m-text">Challenge complete!</div>
+        <div class="m-sub">Credit card near zero. Set up that auto-save. Celebrate (not with shopping) 🌺</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="flower">🌺</span>
+    paying myself first · class of 2026
+  </div>
+
+</div>
+
+<script>
+  const START = new Date(2026, 3, 15);
+  const TODAY = new Date();
+  TODAY.setHours(0,0,0,0);
+  const TOTAL = 30;
+  const AVG_SAVE = 150;
+
+  let states = {};
+  let selected = null;
+
+  try {
+    const saved = localStorage.getItem('noshop30_2026');
+    if (saved) states = JSON.parse(saved);
+  } catch(e) {}
+
+  function save() {
+    try { localStorage.setItem('noshop30_2026', JSON.stringify(states)); } catch(e) {}
+  }
+
+  function getDate(i) {
+    const d = new Date(START);
+    d.setDate(d.getDate() + i);
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function isFuture(i) { return getDate(i) > TODAY; }
+  function isToday(i) { return getDate(i).getTime() === TODAY.getTime(); }
+
+  function markDay(state) {
+    if (selected === null) return;
+    if (state === 'clear') delete states[selected];
+    else states[selected] = state;
+    selected = null;
+    save();
+    render();
+  }
+
+  function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+
+  function render() {
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+
+    const firstDay = START.getDay();
+    for (let i = 0; i < firstDay; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'day-cell blank';
+      grid.appendChild(blank);
+    }
+
+    let strong = 0, slips = 0, logged = 0;
+
+    for (let i = 0; i < TOTAL; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'day-cell';
+      cell.textContent = i + 1;
+
+      const st = states[i];
+      if (st === 'success') { cell.classList.add('success'); strong++; logged++; }
+      else if (st === 'slip') { cell.classList.add('slip'); slips++; logged++; }
+
+      if (isToday(i)) cell.classList.add('today');
+      if (isFuture(i)) cell.classList.add('future');
+      if (selected === i) cell.classList.add('selected');
+
+      cell.addEventListener('click', () => {
+        if (isFuture(i)) return;
+        selected = (selected === i) ? null : i;
+        render();
+      });
+
+      grid.appendChild(cell);
+    }
+
+    const pct = Math.round(logged / TOTAL * 100);
+    const daysLeft = Math.max(0, TOTAL - logged);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = logged + ' of ' + TOTAL + ' days logged — ' + pct + '% complete';
+    document.getElementById('stat-strong').textContent = strong;
+    document.getElementById('stat-remain').textContent = daysLeft;
+    document.getElementById('stat-saved').textContent = fmt(strong * AVG_SAVE);
+
+    document.getElementById('action-hint').textContent =
+      selected !== null ? 'Day ' + (selected + 1) + ' selected — mark it below' : 'Select a day above to log it';
+
+    const milestones = [7, 14, 21, 30];
+    milestones.forEach((m, idx) => {
+      const el = document.getElementById('m' + (idx + 1));
+      if (strong >= m) { el.classList.add('earned'); el.textContent = '🌸'; }
+      else { el.classList.remove('earned'); el.textContent = m; }
+    });
+
+    const tip = document.getElementById('tip-box');
+    if (strong >= 30) {
+      tip.className = 'tip-box tip-gold';
+      tip.textContent = 'You did it!! 30 days strong. That credit card bill is looking beautiful. Now set up that automatic transfer — future you says mahalo! 🌺';
+    } else if (strong >= 21) {
+      tip.className = 'tip-box tip-teal';
+      tip.textContent = '21 days in! The home stretch. The new version of you shops with intention, not impulse. You\'re almost there!';
+    } else if (slips > 3) {
+      tip.className = 'tip-box tip-coral';
+      tip.textContent = 'A few slips is normal — this is hard! Try the 24-hour rule: when the urge hits, close the tab and wait. Most urges pass completely.';
+    } else if (strong >= 7) {
+      tip.className = 'tip-box tip-teal';
+      tip.textContent = 'One week down! The hardest part is behind you. Keep going — your May credit card bill is going to look amazing. 🌺';
+    } else {
+      tip.className = 'tip-box tip-teal';
+      tip.textContent = 'Groceries, gas, and bills don\'t count — those are life. A "strong day" means no clothes, jewelry, or non-essential shopping. You\'ve got this! 🌺';
+    }
+  }
+
+  render();
+</script>
+</body>
+</html>
