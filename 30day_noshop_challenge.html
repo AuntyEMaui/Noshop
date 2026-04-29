@@ -5,32 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="No Shop">
-<title>30-Day No-Shop Challenge</title>
+<meta name="apple-mobile-web-app-title" content="AuntyEMaui">
+<title>AuntyEMaui Financial Tracker</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Inter',sans-serif;background:#f7f2eb;color:#2c2420;min-height:100vh;overflow-x:hidden}
 .header{background:#2c2420;color:#fdfaf6;padding:24px 20px 0;text-align:center}
 .eyebrow{font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:#5dcaa5;margin-bottom:5px;font-weight:300}
-h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;line-height:1.1;margin-bottom:3px;color:#fdfaf6}
+h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;line-height:1.1;margin-bottom:2px;color:#fdfaf6}
 h1 em{font-style:italic;color:#e8a882}
-.header-sub{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);font-weight:300;padding-bottom:12px}
+.month-label{font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:10px;letter-spacing:0.1em}
 .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.1);border-top:1px solid rgba(255,255,255,0.1)}
 .stat{padding:9px 3px;text-align:center;background:rgba(0,0,0,0.25)}
-.stat-val{font-size:16px;font-weight:500;display:block;color:#fdfaf6}
+.stat-val{font-size:15px;font-weight:500;display:block;color:#fdfaf6}
 .stat-val.g{color:#7dd4c8}
 .stat-val.c{color:#e8a882}
 .stat-val.r{color:#f4a261}
 .stat-val.gold{color:#f4d03f}
-.stat-label{font-size:7px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);font-weight:300}
-.net-bar{background:#1a1a1a;padding:8px 16px;display:flex;justify-content:space-between;align-items:center}
-.net-label{font-size:9px;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.4)}
-.net-val{font-size:14px;font-weight:500}
+.stat-label{font-size:7px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);font-weight:300}
+.net-bar{background:#1a1a1a;padding:7px 14px;display:flex;justify-content:space-between;align-items:center}
+.net-left{display:flex;flex-direction:column}
+.net-label{font-size:8px;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.4)}
+.net-val{font-size:15px;font-weight:500}
 .net-pos{color:#7dd4c8}
 .net-neg{color:#f4a261}
+.ytd-right{display:flex;flex-direction:column;align-items:flex-end}
+.ytd-label{font-size:8px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.4)}
+.ytd-val{font-size:13px;font-weight:500;color:#f4d03f}
 .tabs{display:flex;background:#fff;border-bottom:2px solid #e8ddd4;overflow-x:auto}
-.tab-btn{flex:1;min-width:70px;padding:11px 4px;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:9px;font-weight:500;color:#7a6a62;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.15s;white-space:nowrap}
+.tab-btn{flex:1;min-width:65px;padding:11px 3px;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:9px;font-weight:500;color:#7a6a62;cursor:pointer;letter-spacing:0.04em;text-transform:uppercase;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.15s;white-space:nowrap}
 .tab-btn.active{color:#2a7a6e;border-bottom-color:#2a7a6e}
 .panel{display:none;padding:13px}
 .panel.active{display:block}
@@ -71,7 +75,7 @@ h1 em{font-style:italic;color:#e8a882}
 .mb.earned{background:#faf3e0;color:#b8913a;border-color:rgba(184,145,58,0.4);font-size:13px}
 .mt{font-size:11px;color:#2c2420;line-height:1.4}
 .ms{font-size:9px;color:#7a6a62;margin-top:1px}
-.hero{border-radius:13px;padding:16px;margin-bottom:11px;text-align:center;position:relative;overflow:hidden}
+.hero{border-radius:13px;padding:14px;margin-bottom:11px;text-align:center;position:relative;overflow:hidden}
 .hero-green{background:#2c2420}
 .hero-green::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(42,122,110,0.4) 0%,transparent 70%)}
 .hero-red{background:#2c2420}
@@ -79,12 +83,16 @@ h1 em{font-style:italic;color:#e8a882}
 .hero-gold{background:#2c2420}
 .hero-gold::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(184,145,58,0.4) 0%,transparent 70%)}
 .hero-inner{position:relative;z-index:1}
-.hl{font-size:8px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(255,255,255,0.5);margin-bottom:6px}
-.ht{font-family:'Playfair Display',serif;font-size:42px;font-weight:400;line-height:1;margin-bottom:3px}
+.hl{font-size:8px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(255,255,255,0.5);margin-bottom:5px}
+.ht{font-family:'Playfair Display',serif;font-size:38px;font-weight:400;line-height:1;margin-bottom:2px}
 .ht-g{color:#7dd4c8}
 .ht-r{color:#f4a261}
 .ht-gold{color:#f4d03f}
 .hs{font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.1em}
+.totals-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.total-card{background:rgba(255,255,255,0.08);border-radius:8px;padding:9px;text-align:center}
+.total-label{font-size:8px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.4);margin-bottom:3px}
+.total-val{font-size:13px;font-weight:500;color:rgba(255,255,255,0.8)}
 .add-card{background:#fff;border-radius:11px;padding:12px;margin-bottom:11px;border:1px solid #e8ddd4}
 .ir{display:grid;grid-template-columns:1fr auto;gap:6px;margin-bottom:6px}
 .ir-3{display:grid;grid-template-columns:1fr 85px auto;gap:6px;margin-bottom:6px}
@@ -99,13 +107,13 @@ h1 em{font-style:italic;color:#e8a882}
 .add-btn-g:active,.add-btn-r:active,.add-btn-gold:active{transform:scale(0.97)}
 .ilist{background:#fff;border-radius:11px;overflow:hidden;border:1px solid #e8ddd4;margin-bottom:11px}
 .ilh{display:grid;gap:4px;padding:7px 12px;background:#2c2420;font-size:7px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.45)}
-.ilh-4{grid-template-columns:1fr 65px 70px 22px}
-.ilh-5{grid-template-columns:1fr 75px 60px 70px 22px}
-.ilh-earn{grid-template-columns:1fr 80px 70px 22px}
+.ilh-4{grid-template-columns:1fr 60px 68px 22px}
+.ilh-5{grid-template-columns:1fr 70px 58px 68px 22px}
+.ilh-earn{grid-template-columns:1fr 75px 68px 22px}
 .irow{display:grid;gap:4px;padding:9px 12px;border-bottom:1px solid #e8ddd4;align-items:center}
-.irow-4{grid-template-columns:1fr 65px 70px 22px}
-.irow-5{grid-template-columns:1fr 75px 60px 70px 22px}
-.irow-earn{grid-template-columns:1fr 80px 70px 22px}
+.irow-4{grid-template-columns:1fr 60px 68px 22px}
+.irow-5{grid-template-columns:1fr 70px 58px 68px 22px}
+.irow-earn{grid-template-columns:1fr 75px 68px 22px}
 .irow:last-child{border-bottom:none}
 .iname{font-size:11px;color:#2c2420}
 .icat{font-size:9px;color:#7a6a62;font-style:italic}
@@ -122,13 +130,16 @@ h1 em{font-style:italic;color:#e8a882}
 .sum-val{font-size:14px;font-weight:500}
 .sum-val.red{color:#c0392b}
 .sum-val.gold{color:#b8913a}
+.month-nav{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:10px 14px;border-bottom:1px solid #e8ddd4;margin:-13px -13px 13px}
+.month-nav-btn{border:none;background:transparent;font-size:18px;cursor:pointer;color:#2a7a6e;padding:4px 8px}
+.month-nav-label{font-size:12px;font-weight:500;color:#2c2420;letter-spacing:0.05em}
 </style>
 </head>
 <body>
 <div class="header">
-  <div class="eyebrow">April 15 — May 14, 2026</div>
-  <h1>No-Shop <em>Challenge</em></h1>
-  <div class="header-sub">30 days · paying myself first 🌺</div>
+  <div class="eyebrow">AuntyEMaui · Paying Myself First 🌺</div>
+  <h1><em>Financial</em> Tracker</h1>
+  <div class="month-label" id="header-month">May 2026</div>
   <div class="stats-bar">
     <div class="stat"><span class="stat-val g" id="ss">0</span><span class="stat-label">Strong</span></div>
     <div class="stat"><span class="stat-val c" id="sn">$0</span><span class="stat-label">Resisted</span></div>
@@ -136,8 +147,14 @@ h1 em{font-style:italic;color:#e8a882}
     <div class="stat"><span class="stat-val gold" id="se">$0</span><span class="stat-label">Earned</span></div>
   </div>
   <div class="net-bar">
-    <span class="net-label">Monthly net</span>
-    <span class="net-val" id="net-val">$0</span>
+    <div class="net-left">
+      <span class="net-label">This month net</span>
+      <span class="net-val" id="net-val">$0</span>
+    </div>
+    <div class="ytd-right">
+      <span class="ytd-label">Year to date net</span>
+      <span class="ytd-val" id="ytd-val">$0</span>
+    </div>
   </div>
 </div>
 <div class="tabs">
@@ -147,9 +164,14 @@ h1 em{font-style:italic;color:#e8a882}
   <button class="tab-btn" onclick="switchTab('earn',this)">Earned</button>
 </div>
 <div id="panel-cal" class="panel active">
-  <div class="prog-wrap">
+  <div class="month-nav">
+    <button class="month-nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+    <span class="month-nav-label" id="cal-month-label">May 2026</span>
+    <button class="month-nav-btn" onclick="changeMonth(1)">&#8250;</button>
+  </div>
+  <div class="prog-wrap" style="margin-top:-13px">
     <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
-    <div class="prog-label" id="pl">0 of 30 days logged</div>
+    <div class="prog-label" id="pl">0 of 31 days logged</div>
   </div>
   <div class="cal-wrap">
     <div class="cal-head">
@@ -166,22 +188,31 @@ h1 em{font-style:italic;color:#e8a882}
     </div>
     <button class="btn btn-clr" onclick="mark('clr')">Clear selected day</button>
   </div>
-  <div class="tip tip-t" id="tip">Groceries, gas, and bills don't count. A "strong day" means no clothes, jewelry, or non-essential shopping. You've got this! 🌺</div>
+  <div class="tip tip-t" id="tip">Groceries, gas, and bills don't count. A "strong day" means no clothes, jewelry, or non-essential shopping. Protect the streak! 🌺</div>
   <div class="miles">
-    <div class="eyebrow2">Milestones</div>
-    <div class="mi"><div class="mb" id="m1">7</div><div><div class="mt">One week strong</div><div class="ms">Your shopping habit is starting to rewire</div></div></div>
-    <div class="mi"><div class="mb" id="m2">14</div><div><div class="mt">Two weeks done</div><div class="ms">The urge to browse gets noticeably weaker</div></div></div>
-    <div class="mi"><div class="mb" id="m3">21</div><div><div class="mt">Three weeks — new habit forming</div><div class="ms">This is where new routines feel natural</div></div></div>
-    <div class="mi"><div class="mb" id="m4">30</div><div><div class="mt">Challenge complete!</div><div class="ms">Credit card near zero. Auto-save is running! 🌺</div></div></div>
+    <div class="eyebrow2">Monthly milestones</div>
+    <div class="mi"><div class="mb" id="m1">7</div><div><div class="mt">One week strong</div><div class="ms">Your shopping habit is rewiring</div></div></div>
+    <div class="mi"><div class="mb" id="m2">14</div><div><div class="mt">Two weeks done</div><div class="ms">The urge to browse gets weaker</div></div></div>
+    <div class="mi"><div class="mb" id="m3">21</div><div><div class="mt">Three weeks — new habit forming</div><div class="ms">This is where it starts to feel natural</div></div></div>
+    <div class="mi"><div class="mb" id="m4">31</div><div><div class="mt">Full month complete!</div><div class="ms">Pay yourself first. Always. 🌺</div></div></div>
   </div>
-  <div class="footer">🌺 paying myself first · class of 2026</div>
+  <div class="footer">🌺 protect the streak · it will still be there in 30 days</div>
 </div>
 <div id="panel-save" class="panel">
+  <div class="month-nav">
+    <button class="month-nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+    <span class="month-nav-label" id="save-month-label">May 2026</span>
+    <button class="month-nav-btn" onclick="changeMonth(1)">&#8250;</button>
+  </div>
   <div class="hero hero-green">
     <div class="hero-inner">
-      <div class="hl">Money I didn't spend</div>
+      <div class="hl">This month — money I didn't spend</div>
       <div class="ht ht-g" id="bt">$0</div>
-      <div class="hs" id="ic">0 items I resisted</div>
+      <div class="hs" id="ic">0 items resisted</div>
+      <div class="totals-row">
+        <div class="total-card"><div class="total-label">All time resisted</div><div class="total-val" id="bt-all">$0</div></div>
+        <div class="total-card"><div class="total-label">Year to date</div><div class="total-val" id="bt-ytd">$0</div></div>
+      </div>
     </div>
   </div>
   <div class="add-card">
@@ -194,16 +225,25 @@ h1 em{font-style:italic;color:#e8a882}
   </div>
   <div class="ilist">
     <div class="ilh ilh-4"><span>Item I resisted</span><span>Price</span><span>Running total</span><span></span></div>
-    <div id="rib"><div class="empty">Nothing yet — log those temptations! 🌺</div></div>
+    <div id="rib"><div class="empty">Nothing yet this month — log those temptations! 🌺</div></div>
   </div>
   <div class="footer">🌺 every dollar resisted is a dollar saved</div>
 </div>
 <div id="panel-spend" class="panel">
+  <div class="month-nav">
+    <button class="month-nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+    <span class="month-nav-label" id="spend-month-label">May 2026</span>
+    <button class="month-nav-btn" onclick="changeMonth(1)">&#8250;</button>
+  </div>
   <div class="hero hero-red">
     <div class="hero-inner">
-      <div class="hl">Money I did spend</div>
+      <div class="hl">This month — money I did spend</div>
       <div class="ht ht-r" id="st">$0</div>
-      <div class="hs" id="sc">0 necessary expenses tracked</div>
+      <div class="hs" id="sc">0 expenses tracked</div>
+      <div class="totals-row">
+        <div class="total-card"><div class="total-label">All time spent</div><div class="total-val" id="st-all">$0</div></div>
+        <div class="total-card"><div class="total-label">Year to date</div><div class="total-val" id="st-ytd">$0</div></div>
+      </div>
     </div>
   </div>
   <div class="summary-grid" id="cat-summary"></div>
@@ -217,8 +257,9 @@ h1 em{font-style:italic;color:#e8a882}
         <option value="Gas">Gas</option>
         <option value="Apps & Subscriptions">Apps & Subscriptions</option>
         <option value="Medical">Medical</option>
-        <option value="Gifts">Gifts</option>
+        <option value="Gifts & Giving">Gifts & Giving</option>
         <option value="Business">Business</option>
+        <option value="Car & Transport">Car & Transport</option>
         <option value="Other">Other</option>
       </select>
       <input type="number" class="pi" id="si-price" placeholder="$0" inputmode="decimal">
@@ -227,16 +268,25 @@ h1 em{font-style:italic;color:#e8a882}
   </div>
   <div class="ilist">
     <div class="ilh ilh-5"><span>Expense</span><span>Category</span><span>Amount</span><span>Running total</span><span></span></div>
-    <div id="sib"><div class="empty">Nothing logged yet — track every penny! 🌺</div></div>
+    <div id="sib"><div class="empty">Nothing logged yet this month! 🌺</div></div>
   </div>
   <div class="footer">🌺 awareness is the first step to change</div>
 </div>
 <div id="panel-earn" class="panel">
+  <div class="month-nav">
+    <button class="month-nav-btn" onclick="changeMonth(-1)">&#8249;</button>
+    <span class="month-nav-label" id="earn-month-label">May 2026</span>
+    <button class="month-nav-btn" onclick="changeMonth(1)">&#8250;</button>
+  </div>
   <div class="hero hero-gold">
     <div class="hero-inner">
-      <div class="hl">Money I earned</div>
+      <div class="hl">This month — money I earned</div>
       <div class="ht ht-gold" id="et">$0</div>
       <div class="hs" id="ec">0 income entries</div>
+      <div class="totals-row">
+        <div class="total-card"><div class="total-label">All time earned</div><div class="total-val" id="et-all">$0</div></div>
+        <div class="total-card"><div class="total-label">Year to date</div><div class="total-val" id="et-ytd">$0</div></div>
+      </div>
     </div>
   </div>
   <div class="summary-grid" id="earn-summary"></div>
@@ -261,148 +311,115 @@ h1 em{font-style:italic;color:#e8a882}
   <div class="footer">🌺 three income streams · class of 2026</div>
 </div>
 <script>
-var START=new Date(2026,3,15),TODAY=new Date();TODAY.setHours(0,0,0,0);
-var TOTAL=30,states={},resisted=[],spent=[],earned=[],sel=null;
-try{var s=localStorage.getItem('ns26');if(s)states=JSON.parse(s)}catch(e){}
-try{var r=localStorage.getItem('ns26r');if(r)resisted=JSON.parse(r)}catch(e){}
-try{var sp2=localStorage.getItem('ns26s');if(sp2)spent=JSON.parse(sp2)}catch(e){}
-try{var ea=localStorage.getItem('ns26e');if(ea)earned=JSON.parse(ea)}catch(e){}
-function svS(){try{localStorage.setItem('ns26',JSON.stringify(states))}catch(e){}}
-function svR(){try{localStorage.setItem('ns26r',JSON.stringify(resisted))}catch(e){}}
-function svSp(){try{localStorage.setItem('ns26s',JSON.stringify(spent))}catch(e){}}
-function svE(){try{localStorage.setItem('ns26e',JSON.stringify(earned))}catch(e){}}
+var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var TODAY=new Date();TODAY.setHours(0,0,0,0);
+var viewYear=TODAY.getFullYear(),viewMonth=TODAY.getMonth();
+var YTD_START=new Date(2026,4,1);
+var data={};
+try{var d=localStorage.getItem('aem_v5');if(d)data=JSON.parse(d)}catch(e){}
+function save(){try{localStorage.setItem('aem_v5',JSON.stringify(data))}catch(e){}}
+function mk(y,m){return y+'-'+String(m+1).padStart(2,'0')}
+function getM(y,m){var k=mk(y,m);if(!data[k])data[k]={cal:{},resisted:[],spent:[],earned:[]};return data[k]}
 function f(n){return'$'+Math.round(n).toLocaleString()}
 function fd(n){return'$'+parseFloat(n).toFixed(2)}
+function monthLabel(y,m){return MONTHS[m]+' '+y}
+function updateLabels(){
+  var lbl=monthLabel(viewYear,viewMonth);
+  ['header-month','cal-month-label','save-month-label','spend-month-label','earn-month-label'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=lbl});
+}
+function changeMonth(dir){
+  viewMonth+=dir;
+  if(viewMonth<0){viewMonth=11;viewYear--}
+  if(viewMonth>11){viewMonth=0;viewYear++}
+  updateLabels();renderAll();
+}
 function switchTab(name,btn){
   document.querySelectorAll('.tab-btn').forEach(function(t){t.classList.remove('active')});
   document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
   btn.classList.add('active');
   document.getElementById('panel-'+name).classList.add('active');
 }
-function gd(i){var d=new Date(START);d.setDate(d.getDate()+i);d.setHours(0,0,0,0);return d}
-function isFut(i){return gd(i)>TODAY}
-function isTod(i){return gd(i).getTime()===TODAY.getTime()}
+function daysInMonth(y,m){return new Date(y,m+1,0).getDate()}
+function isFut(y,m,d){return new Date(y,m,d)>TODAY}
+function isTod(y,m,d){return new Date(y,m,d).getTime()===TODAY.getTime()}
+var markSel=null;
 function mark(state){
-  if(sel===null)return;
-  if(state==='clr')delete states[sel];
-  else states[sel]=state;
-  sel=null;svS();render();
+  if(markSel===null)return;
+  var md=getM(viewYear,viewMonth);
+  if(state==='clr')delete md.cal[markSel];
+  else md.cal[markSel]=state;
+  markSel=null;save();renderCal();
 }
+function renderCal(){
+  var md=getM(viewYear,viewMonth);
+  var grid=document.getElementById('cg');grid.innerHTML='';
+  var total=daysInMonth(viewYear,viewMonth);
+  var firstDay=new Date(viewYear,viewMonth,1).getDay();
+  for(var i=0;i<firstDay;i++){var b=document.createElement('div');b.className='dc blank';grid.appendChild(b)}
+  var strong=0,slips=0,logged=0;
+  for(var d=1;d<=total;d++){
+    var cell=document.createElement('div');cell.className='dc';cell.textContent=d;
+    var st=md.cal[d];
+    if(st==='ok'){cell.classList.add('ok');strong++;logged++}
+    else if(st==='slip'){cell.classList.add('slip');slips++;logged++}
+    if(isTod(viewYear,viewMonth,d))cell.classList.add('today');
+    if(isFut(viewYear,viewMonth,d))cell.classList.add('future');
+    if(markSel===d)cell.classList.add('sel');
+    (function(day){cell.addEventListener('click',function(){if(isFut(viewYear,viewMonth,day))return;markSel=(markSel===day)?null:day;renderCal()})})(d);
+    grid.appendChild(cell);
+  }
+  var pct=Math.round(logged/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=logged+' of '+total+' days logged — '+pct+'% complete';
+  document.getElementById('ss').textContent=strong;
+  [7,14,21,total].forEach(function(m,idx){var el=document.getElementById('m'+(idx+1));if(el){if(strong>=m){el.classList.add('earned');el.textContent='🌸'}else{el.classList.remove('earned');el.textContent=m}}});
+  var tip=document.getElementById('tip');
+  if(strong>=total){tip.className='tip tip-g';tip.textContent='Full month strong!! Future you says mahalo! 🌺'}
+  else if(strong>=21){tip.className='tip tip-t';tip.textContent='Three weeks in! The home stretch. You shop with intention now, not impulse.'}
+  else if(slips>3){tip.className='tip tip-c';tip.textContent='A few slips is normal! 24-hour rule: when the urge hits, wait. Most urges pass.'}
+  else if(strong>=7){tip.className='tip tip-t';tip.textContent='One week down! Keep going — your credit card bill is going to look amazing. 🌺'}
+  else{tip.className='tip tip-t';tip.textContent='Groceries, gas, and bills don\'t count. Strong day = no clothes, jewelry, or non-essential shopping. Protect the streak! 🌺'}
+  document.getElementById('ah').textContent=markSel!==null?'Day '+markSel+' selected — mark it below':'Tap a day above to select it';
+}
+function allTimeTotal(key){var total=0;Object.keys(data).forEach(function(k){if(data[k]&&data[k][key])data[k][key].forEach(function(i){total+=i.price})});return total}
+function ytdTotal(key){var total=0;Object.keys(data).forEach(function(k){var p=k.split('-');var y=parseInt(p[0]);var m=parseInt(p[1])-1;if(new Date(y,m,1)>=YTD_START&&data[k]&&data[k][key])data[k][key].forEach(function(i){total+=i.price})});return total}
 function updateNet(){
-  var totalEarned=earned.reduce(function(a,b){return a+b.price},0);
-  var totalSpent=spent.reduce(function(a,b){return a+b.price},0);
-  var net=totalEarned-totalSpent;
+  var md=getM(viewYear,viewMonth);
+  var earned=md.earned.reduce(function(a,b){return a+b.price},0);
+  var spent=md.spent.reduce(function(a,b){return a+b.price},0);
+  var net=earned-spent;
   var el=document.getElementById('net-val');
   el.textContent=(net>=0?'+':'')+fd(net);
   el.className='net-val '+(net>=0?'net-pos':'net-neg');
+  var ytdN=ytdTotal('earned')-ytdTotal('spent');
+  document.getElementById('ytd-val').textContent=(ytdN>=0?'+':'')+fd(ytdN);
 }
-function addResisted(){
-  var name=document.getElementById('ri-name').value.trim();
-  var price=parseFloat(document.getElementById('ri-price').value);
-  if(!name||isNaN(price)||price<=0)return;
-  resisted.push({name:name,price:price});
-  document.getElementById('ri-name').value='';
-  document.getElementById('ri-price').value='';
-  svR();renderResisted();
-}
-function addSpend(){
-  var name=document.getElementById('si-name').value.trim();
-  var cat=document.getElementById('si-cat').value;
-  var price=parseFloat(document.getElementById('si-price').value);
-  if(!name||isNaN(price)||price<=0)return;
-  spent.push({name:name,cat:cat,price:price});
-  document.getElementById('si-name').value='';
-  document.getElementById('si-price').value='';
-  svSp();renderSpent();
-}
-function addEarn(){
-  var name=document.getElementById('ei-name').value.trim();
-  var cat=document.getElementById('ei-cat').value;
-  var price=parseFloat(document.getElementById('ei-price').value);
-  if(!name||isNaN(price)||price<=0)return;
-  earned.push({name:name,cat:cat,price:price});
-  document.getElementById('ei-name').value='';
-  document.getElementById('ei-price').value='';
-  svE();renderEarned();
-}
-function delResisted(idx){resisted.splice(idx,1);svR();renderResisted()}
-function delSpent(idx){spent.splice(idx,1);svSp();renderSpent()}
-function delEarned(idx){earned.splice(idx,1);svE();renderEarned()}
+function addResisted(){var name=document.getElementById('ri-name').value.trim();var price=parseFloat(document.getElementById('ri-price').value);if(!name||isNaN(price)||price<=0)return;getM(viewYear,viewMonth).resisted.push({name:name,price:price});document.getElementById('ri-name').value='';document.getElementById('ri-price').value='';save();renderResisted()}
+function addSpend(){var name=document.getElementById('si-name').value.trim();var cat=document.getElementById('si-cat').value;var price=parseFloat(document.getElementById('si-price').value);if(!name||isNaN(price)||price<=0)return;getM(viewYear,viewMonth).spent.push({name:name,cat:cat,price:price});document.getElementById('si-name').value='';document.getElementById('si-price').value='';save();renderSpent()}
+function addEarn(){var name=document.getElementById('ei-name').value.trim();var cat=document.getElementById('ei-cat').value;var price=parseFloat(document.getElementById('ei-price').value);if(!name||isNaN(price)||price<=0)return;getM(viewYear,viewMonth).earned.push({name:name,cat:cat,price:price});document.getElementById('ei-name').value='';document.getElementById('ei-price').value='';save();renderEarned()}
+function delResisted(idx){getM(viewYear,viewMonth).resisted.splice(idx,1);save();renderResisted()}
+function delSpent(idx){getM(viewYear,viewMonth).spent.splice(idx,1);save();renderSpent()}
+function delEarned(idx){getM(viewYear,viewMonth).earned.splice(idx,1);save();renderEarned()}
 function renderResisted(){
-  var body=document.getElementById('rib');
-  if(resisted.length===0){body.innerHTML='<div class="empty">Nothing yet — log those temptations! 🌺</div>';document.getElementById('bt').textContent='$0';document.getElementById('ic').textContent='0 items I resisted';document.getElementById('sn').textContent='$0';return}
-  var running=0,html='';
-  for(var i=0;i<resisted.length;i++){running+=resisted[i].price;html+='<div class="irow irow-4"><div class="iname">'+resisted[i].name+'</div><div class="iprice-g">'+fd(resisted[i].price)+'</div><div class="itotal">'+fd(running)+'</div><button class="idel" onclick="delResisted('+i+')">&#215;</button></div>'}
-  body.innerHTML=html;
-  var total=resisted.reduce(function(a,b){return a+b.price},0);
-  document.getElementById('bt').textContent=fd(total);
-  document.getElementById('ic').textContent=resisted.length+(resisted.length===1?' item I resisted':' items I resisted');
-  document.getElementById('sn').textContent=f(total);
+  var md=getM(viewYear,viewMonth);var body=document.getElementById('rib');var items=md.resisted;
+  if(items.length===0){body.innerHTML='<div class="empty">Nothing yet this month — log those temptations! 🌺</div>';document.getElementById('bt').textContent='$0';document.getElementById('ic').textContent='0 items resisted';document.getElementById('sn').textContent='$0';}
+  else{var running=0,html='';for(var i=0;i<items.length;i++){running+=items[i].price;html+='<div class="irow irow-4"><div class="iname">'+items[i].name+'</div><div class="iprice-g">'+fd(items[i].price)+'</div><div class="itotal">'+fd(running)+'</div><button class="idel" onclick="delResisted('+i+')">&#215;</button></div>'}body.innerHTML=html;var total=items.reduce(function(a,b){return a+b.price},0);document.getElementById('bt').textContent=fd(total);document.getElementById('ic').textContent=items.length+(items.length===1?' item resisted':' items resisted');document.getElementById('sn').textContent=f(total);}
+  document.getElementById('bt-all').textContent=fd(allTimeTotal('resisted'));document.getElementById('bt-ytd').textContent=fd(ytdTotal('resisted'));
 }
 function renderSpent(){
-  var body=document.getElementById('sib');
-  if(spent.length===0){body.innerHTML='<div class="empty">Nothing logged yet — track every penny! 🌺</div>';document.getElementById('st').textContent='$0';document.getElementById('sc').textContent='0 expenses tracked';document.getElementById('sp').textContent='$0';document.getElementById('cat-summary').innerHTML='';updateNet();return}
-  var running=0,html='',cats={};
-  for(var i=0;i<spent.length;i++){running+=spent[i].price;if(!cats[spent[i].cat])cats[spent[i].cat]=0;cats[spent[i].cat]+=spent[i].price;html+='<div class="irow irow-5"><div class="iname">'+spent[i].name+'</div><div class="icat">'+spent[i].cat+'</div><div class="iprice-r">'+fd(spent[i].price)+'</div><div class="itotal">'+fd(running)+'</div><button class="idel" onclick="delSpent('+i+')">&#215;</button></div>'}
-  body.innerHTML=html;
-  var total=spent.reduce(function(a,b){return a+b.price},0);
-  document.getElementById('st').textContent=fd(total);
-  document.getElementById('sc').textContent=spent.length+(spent.length===1?' expense tracked':' expenses tracked');
-  document.getElementById('sp').textContent=f(total);
-  var sumHtml='';
-  for(var cat in cats){sumHtml+='<div class="sum-card"><div class="sum-label">'+cat+'</div><div class="sum-val red">'+fd(cats[cat])+'</div></div>'}
-  document.getElementById('cat-summary').innerHTML=sumHtml;
-  updateNet();
+  var md=getM(viewYear,viewMonth);var body=document.getElementById('sib');var items=md.spent;
+  if(items.length===0){body.innerHTML='<div class="empty">Nothing logged yet this month! 🌺</div>';document.getElementById('st').textContent='$0';document.getElementById('sc').textContent='0 expenses tracked';document.getElementById('sp').textContent='$0';document.getElementById('cat-summary').innerHTML='';}
+  else{var running=0,html='',cats={};for(var i=0;i<items.length;i++){running+=items[i].price;if(!cats[items[i].cat])cats[items[i].cat]=0;cats[items[i].cat]+=items[i].price;html+='<div class="irow irow-5"><div class="iname">'+items[i].name+'</div><div class="icat">'+items[i].cat+'</div><div class="iprice-r">'+fd(items[i].price)+'</div><div class="itotal">'+fd(running)+'</div><button class="idel" onclick="delSpent('+i+')">&#215;</button></div>'}body.innerHTML=html;var total=items.reduce(function(a,b){return a+b.price},0);document.getElementById('st').textContent=fd(total);document.getElementById('sc').textContent=items.length+(items.length===1?' expense tracked':' expenses tracked');document.getElementById('sp').textContent=f(total);var sumHtml='';for(var cat in cats){sumHtml+='<div class="sum-card"><div class="sum-label">'+cat+'</div><div class="sum-val red">'+fd(cats[cat])+'</div></div>'}document.getElementById('cat-summary').innerHTML=sumHtml;}
+  document.getElementById('st-all').textContent=fd(allTimeTotal('spent'));document.getElementById('st-ytd').textContent=fd(ytdTotal('spent'));updateNet();
 }
 function renderEarned(){
-  var body=document.getElementById('eib');
-  if(earned.length===0){body.innerHTML='<div class="empty">Log every dollar you earn! 💰🌺</div>';document.getElementById('et').textContent='$0';document.getElementById('ec').textContent='0 income entries';document.getElementById('se').textContent='$0';document.getElementById('earn-summary').innerHTML='';updateNet();return}
-  var running=0,html='',cats={};
-  for(var i=0;i<earned.length;i++){running+=earned[i].price;if(!cats[earned[i].cat])cats[earned[i].cat]=0;cats[earned[i].cat]+=earned[i].price;html+='<div class="irow irow-earn"><div class="iname">'+earned[i].name+'<div class="icat">'+earned[i].cat+'</div></div><div class="iprice-gold">'+fd(earned[i].price)+'</div><div class="itotal">'+fd(running)+'</div><button class="idel" onclick="delEarned('+i+')">&#215;</button></div>'}
-  body.innerHTML=html;
-  var total=earned.reduce(function(a,b){return a+b.price},0);
-  document.getElementById('et').textContent=fd(total);
-  document.getElementById('ec').textContent=earned.length+(earned.length===1?' income entry':' income entries');
-  document.getElementById('se').textContent=f(total);
-  var sumHtml='';
-  for(var cat in cats){sumHtml+='<div class="sum-card"><div class="sum-label">'+cat+'</div><div class="sum-val gold">'+fd(cats[cat])+'</div></div>'}
-  document.getElementById('earn-summary').innerHTML=sumHtml;
-  updateNet();
+  var md=getM(viewYear,viewMonth);var body=document.getElementById('eib');var items=md.earned;
+  if(items.length===0){body.innerHTML='<div class="empty">Log every dollar you earn! 💰🌺</div>';document.getElementById('et').textContent='$0';document.getElementById('ec').textContent='0 income entries';document.getElementById('se').textContent='$0';document.getElementById('earn-summary').innerHTML='';}
+  else{var running=0,html='',cats={};for(var i=0;i<items.length;i++){running+=items[i].price;if(!cats[items[i].cat])cats[items[i].cat]=0;cats[items[i].cat]+=items[i].price;html+='<div class="irow irow-earn"><div class="iname">'+items[i].name+'<div class="icat">'+items[i].cat+'</div></div><div class="iprice-gold">'+fd(items[i].price)+'</div><div class="itotal">'+fd(running)+'</div><button class="idel" onclick="delEarned('+i+')">&#215;</button></div>'}body.innerHTML=html;var total=items.reduce(function(a,b){return a+b.price},0);document.getElementById('et').textContent=fd(total);document.getElementById('ec').textContent=items.length+(items.length===1?' income entry':' income entries');document.getElementById('se').textContent=f(total);var sumHtml='';for(var cat in cats){sumHtml+='<div class="sum-card"><div class="sum-label">'+cat+'</div><div class="sum-val gold">'+fd(cats[cat])+'</div></div>'}document.getElementById('earn-summary').innerHTML=sumHtml;}
+  document.getElementById('et-all').textContent=fd(allTimeTotal('earned'));document.getElementById('et-ytd').textContent=fd(ytdTotal('earned'));updateNet();
 }
-function render(){
-  var grid=document.getElementById('cg');grid.innerHTML='';
-  var fd2=START.getDay();
-  for(var i=0;i<fd2;i++){var b=document.createElement('div');b.className='dc blank';grid.appendChild(b)}
-  var strong=0,slips=0,logged=0;
-  for(var i=0;i<TOTAL;i++){
-    var cell=document.createElement('div');cell.className='dc';cell.textContent=i+1;
-    var st=states[i];
-    if(st==='ok'){cell.classList.add('ok');strong++;logged++}
-    else if(st==='slip'){cell.classList.add('slip');slips++;logged++}
-    if(isTod(i))cell.classList.add('today');
-    if(isFut(i))cell.classList.add('future');
-    if(sel===i)cell.classList.add('sel');
-    (function(idx){cell.addEventListener('click',function(){if(isFut(idx))return;sel=(sel===idx)?null:idx;render()})})(i);
-    grid.appendChild(cell);
-  }
-  var pct=Math.round(logged/TOTAL*100);
-  document.getElementById('pf').style.width=pct+'%';
-  document.getElementById('pl').textContent=logged+' of '+TOTAL+' days logged — '+pct+'% complete';
-  document.getElementById('ss').textContent=strong;
-  var tip=document.getElementById('tip');
-  if(strong>=30){tip.className='tip tip-g';tip.textContent='You did it!! 30 days strong. Future you says mahalo! 🌺'}
-  else if(strong>=21){tip.className='tip tip-t';tip.textContent='21 days in! The home stretch. You shop with intention now, not impulse.'}
-  else if(slips>3){tip.className='tip tip-c';tip.textContent='A few slips is normal! Try the 24-hour rule: when the urge hits, wait. Most urges pass.'}
-  else if(strong>=7){tip.className='tip tip-t';tip.textContent='One week down! Keep going — your May credit card bill is going to look amazing. 🌺'}
-  else{tip.className='tip tip-t';tip.textContent='Groceries, gas, and bills don\'t count. A "strong day" means no clothes, jewelry, or non-essential shopping. You\'ve got this! 🌺'}
-  document.getElementById('ah').textContent=sel!==null?'Day '+(sel+1)+' selected — mark it below':'Tap a day above to select it';
-  [7,14,21,30].forEach(function(m,idx){
-    var el=document.getElementById('m'+(idx+1));
-    if(strong>=m){el.classList.add('earned');el.textContent='🌸'}
-    else{el.classList.remove('earned');el.textContent=m}
-  });
-}
-render();renderResisted();renderSpent();renderEarned();
+function renderAll(){markSel=null;updateLabels();renderCal();renderResisted();renderSpent();renderEarned()}
+renderAll();
 </script>
 </body>
 </html>
