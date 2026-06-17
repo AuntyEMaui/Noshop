@@ -1,210 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aunty E — Money Tracker</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aunty E · Money Tracker</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap');
 
   :root {
-    --teal:      #2A7F7F;
-    --teal-lt:   #E8F4F4;
-    --gold:      #C9973A;
-    --gold-lt:   #FDF3E3;
-    --coral:     #D95F52;
-    --coral-lt:  #FDECEA;
-    --plum:      #6B3F6B;
-    --plum-lt:   #F3EBF3;
-    --ink:       #1C1C2E;
-    --mist:      #F7F8FA;
-    --border:    #E2E6EA;
-    --white:     #FFFFFF;
-    --success:   #2E7D54;
-    --success-lt:#E8F5EE;
+    --sand: #F5F0E8;
+    --warm-white: #FDFAF5;
+    --terracotta: #C4714A;
+    --terracotta-light: #E8927A;
+    --terracotta-dark: #A05535;
+    --sage: #7A9E8A;
+    --sage-light: #B2CCBC;
+    --navy: #2C3E50;
+    --ink: #3A3530;
+    --mist: #E8E2D8;
+    --gold: #D4A853;
+    --red: #C0392B;
+    --green: #27AE60;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--mist);
+    font-family: 'Inter', sans-serif;
+    background: var(--sand);
     color: var(--ink);
     min-height: 100vh;
   }
 
-  /* ── HEADER ── */
   header {
-    background: var(--teal);
-    padding: 20px 24px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+    color: white;
+    padding: 24px 20px 20px;
+    text-align: center;
   }
 
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
   }
 
-  .header-title {
-    font-family: 'DM Serif Display', serif;
-    color: var(--white);
-    font-size: 1.5rem;
-    letter-spacing: -0.3px;
-  }
-
-  .header-title span {
-    color: var(--gold);
+  header p {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    font-weight: 300;
+    letter-spacing: 0.04em;
   }
 
   .month-badge {
-    background: var(--gold);
-    color: var(--white);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 12px;
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
     border-radius: 20px;
-    letter-spacing: 0.5px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-top: 8px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
-  /* ── FUNDS ON HAND HERO ── */
-  .funds-hero {
-    background: var(--ink);
-    margin: 0 -24px;
-    padding: 14px 24px 18px;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    flex-wrap: wrap;
+  /* DASHBOARD */
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 16px;
   }
 
-  .funds-block { flex: 1; min-width: 120px; }
-  .funds-label {
+  .stat-card {
+    background: var(--warm-white);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  .stat-card .label {
     font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 2px;
-  }
-  .funds-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.6rem;
-    color: var(--white);
-  }
-  .funds-value.positive { color: #5DDBA8; }
-  .funds-value.negative { color: #FF7F7F; }
-  .funds-divider {
-    width: 1px;
-    height: 40px;
-    background: rgba(255,255,255,0.15);
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-bottom: 6px;
+    font-weight: 500;
   }
 
-  /* ── TABS ── */
-  .tab-bar {
+  .stat-card .amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .stat-card.balance .amount { color: var(--sage); }
+  .stat-card.spent .amount  { color: var(--terracotta); }
+  .stat-card.remain .amount { color: var(--gold); }
+  .stat-card.negative .amount { color: var(--red) !important; }
+
+  /* TABS */
+  .tabs {
     display: flex;
-    gap: 0;
-    margin: 0 -24px;
-    margin-top: 4px;
+    border-bottom: 2px solid var(--mist);
+    background: var(--warm-white);
+    overflow-x: auto;
   }
 
   .tab-btn {
     flex: 1;
-    padding: 10px 8px;
-    background: transparent;
+    min-width: 100px;
+    padding: 13px 8px;
     border: none;
-    color: rgba(255,255,255,0.55);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
+    background: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
     font-weight: 500;
+    color: #999;
     cursor: pointer;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.2s;
     border-bottom: 3px solid transparent;
-    transition: all 0.2s;
-    letter-spacing: 0.2px;
+    margin-bottom: -2px;
   }
 
   .tab-btn.active {
-    color: var(--white);
-    border-bottom-color: var(--gold);
-    background: rgba(255,255,255,0.07);
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
   }
 
-  /* ── MAIN CONTENT ── */
-  main { padding: 20px 16px 80px; max-width: 640px; margin: 0 auto; }
+  .tab-content { display: none; padding: 16px; }
+  .tab-content.active { display: block; }
 
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-
-  /* ── CARDS ── */
-  .card {
-    background: var(--white);
+  /* OPENING BALANCE SECTION */
+  .balance-setup {
+    background: var(--warm-white);
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 16px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    border-left: 4px solid var(--gold);
   }
 
-  .card-header {
+  .balance-setup h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .balance-setup p {
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 12px;
+  }
+
+  .balance-row {
     display: flex;
+    gap: 10px;
     align-items: center;
-    justify-content: space-between;
+  }
+
+  .balance-row input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--mist);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+  }
+
+  .balance-row input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  /* FORMS */
+  .form-card {
+    background: var(--warm-white);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  .form-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
     margin-bottom: 14px;
   }
 
-  .card-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1rem;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .card-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-  }
-
-  .icon-teal   { background: var(--teal-lt); }
-  .icon-gold   { background: var(--gold-lt); }
-  .icon-coral  { background: var(--coral-lt); }
-  .icon-plum   { background: var(--plum-lt); }
-  .icon-success{ background: var(--success-lt); }
-
-  .card-total {
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-  .card-total.income { color: var(--success); }
-  .card-total.expense { color: var(--coral); }
-
-  /* ── FORM ELEMENTS ── */
   .form-row {
-    display: flex;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     margin-bottom: 10px;
-    flex-wrap: wrap;
   }
 
-  .form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px; }
+  .form-row.single { grid-template-columns: 1fr; }
 
   label {
     font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
     text-transform: uppercase;
-    color: #7A8491;
+    letter-spacing: 0.06em;
+    color: #888;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
   }
 
   input[type="text"],
@@ -212,887 +222,753 @@
   input[type="date"],
   select,
   textarea {
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 9px 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    color: var(--ink);
-    background: var(--white);
-    transition: border-color 0.2s;
     width: 100%;
-  }
-
-  textarea {
-    min-height: 80px;
-    resize: vertical;
-    line-height: 1.5;
+    padding: 9px 12px;
+    border: 1.5px solid var(--mist);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    transition: border-color 0.2s;
   }
 
   input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: var(--teal);
+    border-color: var(--terracotta-light);
   }
 
+  textarea { resize: vertical; min-height: 60px; }
+
+  /* BUTTONS */
   .btn {
-    padding: 10px 18px;
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
+    letter-spacing: 0.04em;
     transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: white;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .btn-primary:hover { background: var(--terracotta-dark); }
+
+  .btn-gold {
+    background: var(--gold);
+    color: white;
+  }
+
+  .btn-gold:hover { background: #B8923E; }
+
+  .btn-sage {
+    background: var(--sage);
+    color: white;
+  }
+
+  .btn-sage:hover { background: #5E8270; }
+
+  .btn-sm {
+    padding: 5px 12px;
+    font-size: 0.72rem;
+    border-radius: 6px;
+  }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+  }
+
+  .btn-danger:hover { background: var(--red); color: white; }
+
+  /* ENTRIES LIST */
+  .entries-list { margin-top: 8px; }
+
+  .entry-item {
+    background: var(--warm-white);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .entry-info { flex: 1; }
+
+  .entry-desc {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .entry-meta {
+    font-size: 0.72rem;
+    color: #999;
+  }
+
+  .entry-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
     white-space: nowrap;
   }
 
-  .btn-teal   { background: var(--teal);  color: var(--white); }
-  .btn-gold   { background: var(--gold);  color: var(--white); }
-  .btn-coral  { background: var(--coral); color: var(--white); }
-  .btn-plum   { background: var(--plum);  color: var(--white); }
-  .btn:hover  { opacity: 0.88; transform: translateY(-1px); }
-  .btn:active { transform: translateY(0); }
+  .entry-amount.expense { color: var(--terracotta); }
+  .entry-amount.income  { color: var(--sage); }
+  .entry-amount.card    { color: var(--gold); }
 
-  .btn-full { width: 100%; margin-top: 4px; }
+  .entry-actions { display: flex; gap: 6px; align-items: center; }
 
-  /* ── OPENING BALANCE ── */
-  .balance-setup {
-    background: linear-gradient(135deg, var(--teal) 0%, #1D5F5F 100%);
+  /* CATEGORY PILL */
+  .cat-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--mist);
+    color: #777;
+    margin-left: 6px;
+  }
+
+  /* EXPORT SECTION */
+  .export-section {
+    background: var(--warm-white);
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 16px;
-    color: var(--white);
-  }
-
-  .balance-setup label { color: rgba(255,255,255,0.7); }
-  .balance-setup input {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.3);
-    color: var(--white);
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-  .balance-setup input::placeholder { color: rgba(255,255,255,0.4); }
-  .balance-setup input:focus { border-color: var(--gold); background: rgba(255,255,255,0.2); }
-
-  .balance-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1rem;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* ── LEDGER ENTRIES ── */
-  .entry-list { margin-top: 8px; }
-
-  .entry-item {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 8px;
-  }
-
-  .entry-item:last-child { border-bottom: none; }
-
-  .entry-left { flex: 1; }
-  .entry-desc {
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--ink);
-    line-height: 1.3;
-  }
-  .entry-meta {
-    font-size: 0.72rem;
-    color: #9AA0A8;
-    margin-top: 2px;
-  }
-
-  .entry-right { text-align: right; flex-shrink: 0; }
-  .entry-amount {
-    font-size: 0.92rem;
-    font-weight: 600;
-  }
-  .entry-amount.income  { color: var(--success); }
-  .entry-amount.expense { color: var(--coral); }
-
-  .delete-btn {
-    background: none;
-    border: none;
-    color: #CBD0D8;
-    cursor: pointer;
-    font-size: 0.8rem;
-    padding: 0 4px;
-    margin-top: 2px;
-    transition: color 0.2s;
-  }
-  .delete-btn:hover { color: var(--coral); }
-
-  .empty-state {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    border-left: 4px solid var(--sage);
     text-align: center;
-    padding: 24px 0;
-    color: #B0B8C4;
-    font-size: 0.85rem;
   }
 
-  /* ── CC DETAIL NOTE ── */
-  .cc-note {
-    background: var(--gold-lt);
-    border: 1px solid #EDD9A3;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 0.8rem;
-    color: #7A5C1E;
+  .export-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .export-section p {
+    font-size: 0.75rem;
+    color: #888;
     margin-bottom: 14px;
     line-height: 1.5;
   }
 
-  /* ── RESIST LOG ── */
-  .resist-streak {
+  .export-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* NUDGE BANNER */
+  .nudge-banner {
+    background: linear-gradient(135deg, var(--gold), #C09040);
+    color: white;
+    padding: 12px 16px;
     text-align: center;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--plum) 0%, #4A2A5A 100%);
-    border-radius: 14px;
-    margin-bottom: 16px;
-    color: var(--white);
-  }
-
-  .resist-number {
-    font-family: 'DM Serif Display', serif;
-    font-size: 3rem;
-    line-height: 1;
-    color: var(--gold);
-  }
-
-  .resist-label {
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.7;
-    margin-top: 4px;
-  }
-
-  .resist-entry {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .resist-entry:last-child { border-bottom: none; }
-
-  .resist-urge {
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-weight: 500;
-    color: var(--plum);
-    margin-bottom: 4px;
+    display: none;
   }
 
-  .resist-instead {
+  .nudge-banner.show { display: block; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 30px 20px;
+    color: #bbb;
     font-size: 0.82rem;
-    color: var(--success);
     font-style: italic;
   }
 
-  .resist-date {
-    font-size: 0.7rem;
-    color: #B0B8C4;
-    margin-top: 3px;
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
   }
 
-  /* ── MONTH SUMMARY ── */
-  .summary-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
+  .section-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
   }
 
-  .summary-tile {
-    border-radius: 12px;
-    padding: 14px;
+  /* TOAST */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 24px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+  }
+
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* RESET MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.show { display: flex; }
+
+  .modal-box {
+    background: var(--warm-white);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 340px;
+    width: 100%;
     text-align: center;
   }
 
-  .summary-tile .s-label {
-    font-size: 0.67rem;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
+  .modal-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--ink);
   }
 
-  .summary-tile .s-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.4rem;
+  .modal-box p {
+    font-size: 0.82rem;
+    color: #777;
+    margin-bottom: 20px;
+    line-height: 1.5;
   }
 
-  .tile-income  { background: var(--success-lt); }
-  .tile-income  .s-label { color: var(--success); }
-  .tile-income  .s-value { color: var(--success); }
+  .modal-btns { display: flex; gap: 10px; }
+  .modal-btns .btn { flex: 1; }
 
-  .tile-expense { background: var(--coral-lt); }
-  .tile-expense .s-label { color: var(--coral); }
-  .tile-expense .s-value { color: var(--coral); }
-
-  .tile-net { background: var(--teal-lt); }
-  .tile-net .s-label { color: var(--teal); }
-  .tile-net .s-value { color: var(--teal); }
-
-  .tile-resist { background: var(--plum-lt); }
-  .tile-resist .s-label { color: var(--plum); }
-  .tile-resist .s-value { color: var(--plum); }
-
-  /* ── SECTION DIVIDER ── */
-  .section-divider {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: #A0A8B4;
-    margin: 18px 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 400px) {
-    .funds-hero { gap: 16px; }
-    .funds-value { font-size: 1.3rem; }
-    .tab-btn { font-size: 0.7rem; padding: 8px 4px; }
-    .summary-grid { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 380px) {
+    .dashboard { grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .stat-card .amount { font-size: 1rem; }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- NUDGE BANNER (shows on 1st of month) -->
+<div class="nudge-banner" id="nudgeBanner">
+  📅 It's the 1st! Time to export your data before any updates. 👇
+</div>
+
 <header>
-  <div class="header-top">
-    <div class="header-title">Aunty E <span>Money</span></div>
-    <div class="month-badge" id="currentMonth"></div>
-  </div>
-
-  <div class="funds-hero">
-    <div class="funds-block">
-      <div class="funds-label">Opening Balance</div>
-      <div class="funds-value" id="heroOpening">$0.00</div>
-    </div>
-    <div class="funds-divider"></div>
-    <div class="funds-block">
-      <div class="funds-label">In This Month</div>
-      <div class="funds-value positive" id="heroIncome">+$0.00</div>
-    </div>
-    <div class="funds-divider"></div>
-    <div class="funds-block">
-      <div class="funds-label">Out This Month</div>
-      <div class="funds-value" id="heroExpense">-$0.00</div>
-    </div>
-    <div class="funds-divider"></div>
-    <div class="funds-block">
-      <div class="funds-label">Funds on Hand</div>
-      <div class="funds-value" id="heroFunds">$0.00</div>
-    </div>
-  </div>
-
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('ledger', this)">💰 Ledger</button>
-    <button class="tab-btn" onclick="switchTab('card', this)">💳 On the Card</button>
-    <button class="tab-btn" onclick="switchTab('resist', this)">💪 Resist Log</button>
-    <button class="tab-btn" onclick="switchTab('summary', this)">📊 Summary</button>
-  </div>
+  <h1>💰 Aunty E's Money Tracker</h1>
+  <p>Track what comes in. Track what goes out.</p>
+  <div class="month-badge" id="monthBadge"></div>
 </header>
 
-<main>
+<!-- DASHBOARD -->
+<div class="dashboard">
+  <div class="stat-card balance">
+    <div class="label">Opening Balance</div>
+    <div class="amount" id="dashBalance">$0</div>
+  </div>
+  <div class="stat-card spent">
+    <div class="label">Total Out</div>
+    <div class="amount" id="dashSpent">$0</div>
+  </div>
+  <div class="stat-card remain" id="remainCard">
+    <div class="label">Remaining</div>
+    <div class="amount" id="dashRemain">$0</div>
+  </div>
+</div>
 
-  <!-- ══════════════════════════════════════════
-       TAB 1 — LEDGER (Funds on Hand)
-  ══════════════════════════════════════════ -->
-  <div id="tab-ledger" class="tab-panel active">
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('ledger')">💳 Ledger</button>
+  <button class="tab-btn" onclick="showTab('oncard')">🃏 On the Card</button>
+  <button class="tab-btn" onclick="showTab('export')">📤 Export</button>
+</div>
 
-    <!-- Opening Balance -->
-    <div class="balance-setup">
-      <div class="balance-title">🏦 Monthly Opening Balance</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Set Balance (update 1st of each month)</label>
-          <input type="number" id="openingBalance" placeholder="0.00" step="0.01"
-                 oninput="saveOpeningBalance()" />
-        </div>
+<!-- LEDGER TAB -->
+<div class="tab-content active" id="tab-ledger">
+
+  <!-- Opening Balance -->
+  <div class="balance-setup">
+    <h3>📌 Opening Balance</h3>
+    <p>Enter your actual bank balance for this month. This is your starting point.</p>
+    <div class="balance-row">
+      <input type="number" id="balanceInput" placeholder="e.g. 2450.00" step="0.01" min="0" />
+      <button class="btn btn-gold" onclick="saveBalance()">Save</button>
+    </div>
+  </div>
+
+  <!-- Add Expense / Income -->
+  <div class="form-card">
+    <h3>➕ Add Entry</h3>
+    <div class="form-row">
+      <div>
+        <label>Date</label>
+        <input type="date" id="entryDate" />
+      </div>
+      <div>
+        <label>Type</label>
+        <select id="entryType">
+          <option value="expense">💸 Expense</option>
+          <option value="income">💵 Income</option>
+        </select>
       </div>
     </div>
-
-    <!-- Income Section -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-success">💚</div>
-          Income
-        </div>
-        <div class="card-total income" id="totalIncome">$0.00</div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Source</label>
-          <select id="incomeSource">
-            <option value="Sullivan Properties">Sullivan Properties</option>
-            <option value="Serendipity">Serendipity</option>
-            <option value="Beads Seams & Sticky Things">Beads Seams & Sticky Things</option>
-            <option value="Kids Contributions">Kids Contributions</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="form-group" style="max-width:130px">
-          <label>Amount</label>
-          <input type="number" id="incomeAmount" placeholder="0.00" step="0.01" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Note (optional)</label>
-          <input type="text" id="incomeNote" placeholder="e.g. paycheck, Ace phone reimbursement…" />
-        </div>
-        <div class="form-group" style="max-width:140px">
-          <label>Date</label>
-          <input type="date" id="incomeDate" />
-        </div>
-      </div>
-      <button class="btn btn-teal btn-full" onclick="addIncome()">+ Add Income</button>
-
-      <div class="entry-list" id="incomeList">
-        <div class="empty-state">No income logged yet this month</div>
+    <div class="form-row single">
+      <div>
+        <label>Description</label>
+        <input type="text" id="entryDesc" placeholder="e.g. Groceries, Rent, Sullivan paycheck..." />
       </div>
     </div>
-
-    <!-- Expense Section -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-coral">🧾</div>
-          Expenses Out
-        </div>
-        <div class="card-total expense" id="totalExpense">$0.00</div>
+    <div class="form-row">
+      <div>
+        <label>Amount ($)</label>
+        <input type="number" id="entryAmount" placeholder="0.00" step="0.01" min="0" />
       </div>
-
-      <div class="cc-note">
-        💳 <strong>Credit card payments:</strong> Enter the total payment amount here. Then log the individual items in the <em>On the Card</em> tab so they balance out.
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Category</label>
-          <select id="expenseCategory">
-            <option value="Credit Card Payment">Credit Card Payment</option>
-            <option value="Housing">Housing</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Groceries">Groceries</option>
-            <option value="Phone Bill">Phone Bill</option>
-            <option value="Insurance">Insurance</option>
-            <option value="Gas / Transport">Gas / Transport</option>
-            <option value="Sewing Supplies">Sewing Supplies</option>
-            <option value="Medical">Medical</option>
-            <option value="Dining Out">Dining Out</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Savings Transfer">Savings Transfer</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="form-group" style="max-width:130px">
-          <label>Amount</label>
-          <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Description</label>
-          <input type="text" id="expenseDesc" placeholder="e.g. Visa payment, electric bill…" />
-        </div>
-        <div class="form-group" style="max-width:140px">
-          <label>Date</label>
-          <input type="date" id="expenseDate" />
-        </div>
-      </div>
-      <button class="btn btn-coral btn-full" onclick="addExpense()">+ Add Expense</button>
-
-      <div class="entry-list" id="expenseList">
-        <div class="empty-state">No expenses logged yet this month</div>
+      <div>
+        <label>Category</label>
+        <select id="entryCategory">
+          <option value="Groceries">Groceries</option>
+          <option value="Gas">Gas</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Dining">Dining</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Health">Health</option>
+          <option value="Personal">Personal</option>
+          <option value="Business">Business</option>
+          <option value="Income">Income</option>
+          <option value="Reimbursement">Reimbursement</option>
+          <option value="Other">Other</option>
+        </select>
       </div>
     </div>
-
-  </div><!-- /tab-ledger -->
-
-
-  <!-- ══════════════════════════════════════════
-       TAB 2 — ON THE CARD
-  ══════════════════════════════════════════ -->
-  <div id="tab-card" class="tab-panel">
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-gold">💳</div>
-          What's on the Card
-        </div>
-        <div class="card-total expense" id="totalCard">$0.00</div>
-      </div>
-
-      <div class="cc-note">
-        Log every swipe here. When you pay the card, the total below should match what you paid in the Ledger. This doesn't affect your funds on hand — it's just your awareness check. ✅
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Where / What</label>
-          <input type="text" id="cardDesc" placeholder="e.g. Ross, Safeway, Target…" />
-        </div>
-        <div class="form-group" style="max-width:130px">
-          <label>Amount</label>
-          <input type="number" id="cardAmount" placeholder="0.00" step="0.01" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Category</label>
-          <select id="cardCategory">
-            <option value="Clothing / Shopping">Clothing / Shopping</option>
-            <option value="Groceries">Groceries</option>
-            <option value="Gas">Gas</option>
-            <option value="Dining Out">Dining Out</option>
-            <option value="Household">Household</option>
-            <option value="Sewing Supplies">Sewing Supplies</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Medical">Medical</option>
-            <option value="Beauty">Beauty</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="form-group" style="max-width:140px">
-          <label>Date</label>
-          <input type="date" id="cardDate" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Notes (optional)</label>
-          <textarea id="cardNotes" placeholder="What did you buy? Any details worth remembering…"></textarea>
-        </div>
-      </div>
-
-      <button class="btn btn-gold btn-full" onclick="addCardItem()">+ Add Card Item</button>
-
-      <div class="section-divider">Card Items This Cycle</div>
-
-      <div class="entry-list" id="cardList">
-        <div class="empty-state">No card items logged yet</div>
-      </div>
-
-      <div style="margin-top:14px; padding-top:14px; border-top:2px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:0.85rem; font-weight:600; color:#7A8491;">CARD TOTAL (to pay)</span>
-        <span style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:var(--coral);" id="cardPayTotal">$0.00</span>
-      </div>
-
-    </div>
-
-  </div><!-- /tab-card -->
-
-
-  <!-- ══════════════════════════════════════════
-       TAB 3 — RESIST LOG
-  ══════════════════════════════════════════ -->
-  <div id="tab-resist" class="tab-panel">
-
-    <div class="resist-streak">
-      <div class="resist-number" id="resistCount">0</div>
-      <div class="resist-label">Urges Resisted 💪</div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-plum">✨</div>
-          Log a Win
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>What was the urge?</label>
-          <input type="text" id="resistUrge" placeholder="e.g. Almost bought a dress at Ross…" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>What did you do instead?</label>
-          <textarea id="resistInstead" placeholder="e.g. Reminded myself it will still be there in 30 days. Came home and remixed my closet instead."></textarea>
-        </div>
-      </div>
-
-      <button class="btn btn-plum btn-full" onclick="addResist()">+ Log This Win</button>
-
-      <div class="section-divider">Your Wins</div>
-
-      <div class="entry-list" id="resistList">
-        <div class="empty-state">Every urge you log here is a dollar saved 🌺</div>
+    <div class="form-row single">
+      <div>
+        <label>Notes (optional)</label>
+        <textarea id="entryNotes" placeholder="Any extra details..."></textarea>
       </div>
     </div>
+    <button class="btn btn-primary" onclick="addEntry()">Add to Ledger</button>
+  </div>
 
-  </div><!-- /tab-resist -->
+  <!-- Ledger Entries -->
+  <div class="section-header">
+    <h3>📒 This Month's Ledger</h3>
+    <button class="btn btn-sage btn-sm" onclick="showResetModal()">🔄 New Month</button>
+  </div>
+  <div class="entries-list" id="ledgerList"></div>
+</div>
 
-
-  <!-- ══════════════════════════════════════════
-       TAB 4 — MONTHLY SUMMARY
-  ══════════════════════════════════════════ -->
-  <div id="tab-summary" class="tab-panel">
-
-    <div class="summary-grid">
-      <div class="summary-tile tile-income">
-        <div class="s-label">Total In</div>
-        <div class="s-value" id="sumIncome">$0</div>
+<!-- ON THE CARD TAB -->
+<div class="tab-content" id="tab-oncard">
+  <div class="form-card">
+    <h3>🃏 Add Card Purchase</h3>
+    <p style="font-size:0.75rem;color:#888;margin-bottom:14px;">Track what you've put on the credit card for awareness — this does <strong>not</strong> affect your bank balance. You'll log the actual payment when it hits your account.</p>
+    <div class="form-row">
+      <div>
+        <label>Date</label>
+        <input type="date" id="cardDate" />
       </div>
-      <div class="summary-tile tile-expense">
-        <div class="s-label">Total Out</div>
-        <div class="s-value" id="sumExpense">$0</div>
-      </div>
-      <div class="summary-tile tile-net">
-        <div class="s-label">Net This Month</div>
-        <div class="s-value" id="sumNet">$0</div>
-      </div>
-      <div class="summary-tile tile-resist">
-        <div class="s-label">Urges Resisted</div>
-        <div class="s-value" id="sumResist">0</div>
-      </div>
-    </div>
-
-    <!-- Income Breakdown -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-success">💚</div>
-          Income Breakdown
-        </div>
-      </div>
-      <div id="incomeBreakdown">
-        <div class="empty-state">No income logged yet</div>
+      <div>
+        <label>Amount ($)</label>
+        <input type="number" id="cardAmount" placeholder="0.00" step="0.01" min="0" />
       </div>
     </div>
-
-    <!-- Expense Breakdown -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-coral">🧾</div>
-          Expense Breakdown
-        </div>
-      </div>
-      <div id="expenseBreakdown">
-        <div class="empty-state">No expenses logged yet</div>
+    <div class="form-row single">
+      <div>
+        <label>Description</label>
+        <input type="text" id="cardDesc" placeholder="e.g. Amazon, Target, Serendipity..." />
       </div>
     </div>
+    <button class="btn btn-primary" onclick="addCardEntry()">Add to Card Log</button>
+  </div>
 
-    <!-- Card Breakdown -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <div class="card-icon icon-gold">💳</div>
-          Card Spending by Category
-        </div>
-      </div>
-      <div id="cardBreakdown">
-        <div class="empty-state">No card items logged yet</div>
-      </div>
+  <div class="section-header">
+    <h3>🃏 Card Purchases</h3>
+    <div style="font-size:0.75rem;color:#888;">Total: <strong id="cardTotal">$0</strong></div>
+  </div>
+  <div class="entries-list" id="cardList"></div>
+</div>
+
+<!-- EXPORT TAB -->
+<div class="tab-content" id="tab-export">
+  <div class="export-section">
+    <h3>📤 Export Your Data</h3>
+    <p>Download a CSV backup of your ledger before making any code updates or at the end of each month. Your data is safe as long as you export regularly!</p>
+    <div class="export-btns">
+      <button class="btn btn-sage" onclick="exportCSV('ledger')">⬇️ Export Ledger CSV</button>
+      <button class="btn btn-gold" onclick="exportCSV('card')">⬇️ Export Card Log CSV</button>
     </div>
+  </div>
 
-    <div style="text-align:center; margin-top:16px;">
-      <button class="btn btn-coral" onclick="confirmReset()">🔄 Reset for New Month</button>
+  <div class="export-section" style="border-left-color: var(--terracotta); margin-top:0;">
+    <h3>🗂️ Data Summary</h3>
+    <p id="dataSummary" style="margin-bottom:0;"></p>
+  </div>
+
+  <div class="export-section" style="border-left-color: #C0392B; margin-top:0;">
+    <h3>⚠️ Danger Zone</h3>
+    <p>Reset everything for a new month. <strong>Export first!</strong></p>
+    <button class="btn btn-danger" onclick="showResetModal()">🔄 Reset for New Month</button>
+  </div>
+</div>
+
+<!-- RESET MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal-box">
+    <h3>🔄 Start a New Month?</h3>
+    <p>This will clear all ledger entries and card purchases and reset your opening balance to zero. <strong>Make sure you've exported your data first!</strong></p>
+    <div class="modal-btns">
+      <button class="btn btn-danger" onclick="confirmReset()">Yes, Reset</button>
+      <button class="btn btn-primary" onclick="closeResetModal()">Cancel</button>
     </div>
+  </div>
+</div>
 
-  </div><!-- /tab-summary -->
-
-</main>
+<!-- TOAST -->
+<div id="toast"></div>
 
 <script>
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-let state = {
-  openingBalance: 0,
-  income: [],
-  expenses: [],
-  cardItems: [],
-  resistLog: []
-};
+  const STORAGE_KEY = 'auntyE-tracker-v3';
 
-// ══════════════════════════════════════
-// STORAGE
-// ══════════════════════════════════════
-async function loadState() {
-  try {
-    const saved = await window.storage.get('auntyE-tracker-v3');
-    if (saved && saved.value) {
-      state = JSON.parse(saved.value);
+  // ─── LOAD / SAVE ───────────────────────────────────────────────
+  function loadData() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultData();
+      return JSON.parse(raw);
+    } catch(e) {
+      return defaultData();
     }
-  } catch(e) {
-    // fresh start
   }
-  applyState();
-}
 
-async function saveState() {
-  try {
-    await window.storage.set('auntyE-tracker-v3', JSON.stringify(state));
-  } catch(e) {
-    console.error('Save failed', e);
+  function defaultData() {
+    return {
+      openingBalance: 0,
+      entries: [],
+      cardEntries: [],
+      lastExport: null
+    };
   }
-  applyState();
-}
 
-// ══════════════════════════════════════
-// APPLY STATE TO UI
-// ══════════════════════════════════════
-function applyState() {
-  // Opening balance
-  document.getElementById('openingBalance').value = state.openingBalance || '';
-
-  const totalIn  = state.income.reduce((s,i) => s + i.amount, 0);
-  const totalOut = state.expenses.reduce((s,i) => s + i.amount, 0);
-  const totalCard= state.cardItems.reduce((s,i) => s + i.amount, 0);
-  const fundsOnHand = (state.openingBalance || 0) + totalIn - totalOut;
-
-  // Hero numbers
-  document.getElementById('heroOpening').textContent = fmt(state.openingBalance || 0);
-  document.getElementById('heroIncome').textContent  = '+' + fmt(totalIn);
-  document.getElementById('heroExpense').textContent = '-' + fmt(totalOut);
-
-  const heroFunds = document.getElementById('heroFunds');
-  heroFunds.textContent = fmt(fundsOnHand);
-  heroFunds.className = 'funds-value ' + (fundsOnHand >= 0 ? 'positive' : 'negative');
-
-  // Totals
-  document.getElementById('totalIncome').textContent  = fmt(totalIn);
-  document.getElementById('totalExpense').textContent = fmt(totalOut);
-  document.getElementById('totalCard').textContent    = fmt(totalCard);
-  document.getElementById('cardPayTotal').textContent = fmt(totalCard);
-
-  // Summary
-  document.getElementById('sumIncome').textContent  = fmt(totalIn);
-  document.getElementById('sumExpense').textContent = fmt(totalOut);
-  const net = document.getElementById('sumNet');
-  const netVal = totalIn - totalOut;
-  net.textContent = fmt(netVal);
-  net.style.color = netVal >= 0 ? 'var(--teal)' : 'var(--coral)';
-  document.getElementById('sumResist').textContent = state.resistLog.length;
-  document.getElementById('resistCount').textContent = state.resistLog.length;
-
-  renderList('incomeList',  state.income,    renderIncomeItem);
-  renderList('expenseList', state.expenses,  renderExpenseItem);
-  renderList('cardList',    state.cardItems, renderCardItem);
-  renderList('resistList',  state.resistLog, renderResistItem);
-
-  renderBreakdown('incomeBreakdown',  state.income,    'source',   'income');
-  renderBreakdown('expenseBreakdown', state.expenses,  'category', 'expense');
-  renderBreakdown('cardBreakdown',    state.cardItems, 'category', 'expense');
-}
-
-function renderList(id, arr, renderFn) {
-  const el = document.getElementById(id);
-  if (!arr || arr.length === 0) {
-    el.innerHTML = '<div class="empty-state">Nothing logged yet 🌺</div>';
-    return;
+  // Retry-loop save — same fix that solved the BSST bug
+  function saveData(data) {
+    let saved = false;
+    let attempts = 0;
+    while (!saved && attempts < 5) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        // Verify it actually wrote
+        const verify = localStorage.getItem(STORAGE_KEY);
+        if (verify) saved = true;
+      } catch(e) {
+        attempts++;
+      }
+    }
+    if (!saved) showToast('⚠️ Could not save — storage may be full.');
+    return saved;
   }
-  el.innerHTML = [...arr].reverse().map((item, i) => renderFn(item, arr.length - 1 - i)).join('');
-}
 
-function renderIncomeItem(item, idx) {
-  return `<div class="entry-item">
-    <div class="entry-left">
-      <div class="entry-desc">${item.source}</div>
-      <div class="entry-meta">${item.note ? item.note + ' · ' : ''}${item.date}</div>
-    </div>
-    <div class="entry-right">
-      <div class="entry-amount income">+${fmt(item.amount)}</div>
-      <button class="delete-btn" onclick="deleteItem('income',${idx})">✕</button>
-    </div>
-  </div>`;
-}
+  let appData = loadData();
 
-function renderExpenseItem(item, idx) {
-  return `<div class="entry-item">
-    <div class="entry-left">
-      <div class="entry-desc">${item.desc || item.category}</div>
-      <div class="entry-meta">${item.category} · ${item.date}</div>
-    </div>
-    <div class="entry-right">
-      <div class="entry-amount expense">-${fmt(item.amount)}</div>
-      <button class="delete-btn" onclick="deleteItem('expenses',${idx})">✕</button>
-    </div>
-  </div>`;
-}
+  // ─── INIT ───────────────────────────────────────────────────────
+  function init() {
+    // Set today's date on inputs
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('entryDate').value = today;
+    document.getElementById('cardDate').value = today;
 
-function renderCardItem(item, idx) {
-  return `<div class="entry-item">
-    <div class="entry-left">
-      <div class="entry-desc">${item.desc}</div>
-      <div class="entry-meta">${item.category} · ${item.date}${item.notes ? '<br><em style="color:#9AA0A8">' + item.notes + '</em>' : ''}</div>
-    </div>
-    <div class="entry-right">
-      <div class="entry-amount expense">${fmt(item.amount)}</div>
-      <button class="delete-btn" onclick="deleteItem('cardItems',${idx})">✕</button>
-    </div>
-  </div>`;
-}
+    // Month badge
+    const now = new Date();
+    document.getElementById('monthBadge').textContent =
+      now.toLocaleString('default', { month: 'long', year: 'numeric' });
 
-function renderResistItem(item, idx) {
-  return `<div class="resist-entry">
-    <div class="resist-urge">🛑 ${item.urge}</div>
-    <div class="resist-instead">✅ ${item.instead}</div>
-    <div class="resist-date">${item.date}</div>
-    <button class="delete-btn" onclick="deleteItem('resistLog',${idx})" style="margin-top:4px">✕ remove</button>
-  </div>`;
-}
+    // Show nudge on 1st of month
+    if (now.getDate() === 1) {
+      document.getElementById('nudgeBanner').classList.add('show');
+    }
 
-function renderBreakdown(id, arr, groupKey, type) {
-  const el = document.getElementById(id);
-  if (!arr || arr.length === 0) {
-    el.innerHTML = '<div class="empty-state">Nothing logged yet</div>';
-    return;
+    // Populate balance input if already set
+    if (appData.openingBalance > 0) {
+      document.getElementById('balanceInput').value = appData.openingBalance;
+    }
+
+    renderAll();
   }
-  const totals = {};
-  arr.forEach(item => {
-    const key = item[groupKey] || 'Other';
-    totals[key] = (totals[key] || 0) + item.amount;
-  });
-  const grand = Object.values(totals).reduce((a,b)=>a+b,0);
-  el.innerHTML = Object.entries(totals)
-    .sort((a,b)=>b[1]-a[1])
-    .map(([k,v]) => {
-      const pct = grand > 0 ? Math.round(v/grand*100) : 0;
-      const clr = type==='income' ? 'var(--success)' : 'var(--coral)';
-      return `<div style="margin-bottom:10px">
-        <div style="display:flex;justify-content:space-between;font-size:0.83rem;margin-bottom:4px">
-          <span style="font-weight:500">${k}</span>
-          <span style="color:${clr};font-weight:600">${fmt(v)}</span>
+
+  // ─── OPENING BALANCE ────────────────────────────────────────────
+  function saveBalance() {
+    const val = parseFloat(document.getElementById('balanceInput').value);
+    if (isNaN(val) || val < 0) {
+      showToast('Please enter a valid balance amount.');
+      return;
+    }
+    appData.openingBalance = val;
+    const ok = saveData(appData);
+    if (ok) {
+      showToast('✅ Opening balance saved!');
+      renderDashboard();
+    }
+  }
+
+  // ─── ADD LEDGER ENTRY ───────────────────────────────────────────
+  function addEntry() {
+    const date   = document.getElementById('entryDate').value;
+    const type   = document.getElementById('entryType').value;
+    const desc   = document.getElementById('entryDesc').value.trim();
+    const amount = parseFloat(document.getElementById('entryAmount').value);
+    const cat    = document.getElementById('entryCategory').value;
+    const notes  = document.getElementById('entryNotes').value.trim();
+
+    if (!date || !desc || isNaN(amount) || amount <= 0) {
+      showToast('Please fill in date, description, and a valid amount.');
+      return;
+    }
+
+    const entry = {
+      id: Date.now(),
+      date, type, desc, amount, cat, notes
+    };
+
+    appData.entries.push(entry);
+    const ok = saveData(appData);
+    if (ok) {
+      showToast(type === 'expense' ? '💸 Expense added!' : '💵 Income added!');
+      document.getElementById('entryDesc').value = '';
+      document.getElementById('entryAmount').value = '';
+      document.getElementById('entryNotes').value = '';
+      renderAll();
+    }
+  }
+
+  // ─── ADD CARD ENTRY ─────────────────────────────────────────────
+  function addCardEntry() {
+    const date   = document.getElementById('cardDate').value;
+    const amount = parseFloat(document.getElementById('cardAmount').value);
+    const desc   = document.getElementById('cardDesc').value.trim();
+
+    if (!date || !desc || isNaN(amount) || amount <= 0) {
+      showToast('Please fill in all card purchase fields.');
+      return;
+    }
+
+    const entry = { id: Date.now(), date, desc, amount };
+    appData.cardEntries.push(entry);
+    const ok = saveData(appData);
+    if (ok) {
+      showToast('🃏 Card purchase logged!');
+      document.getElementById('cardDesc').value = '';
+      document.getElementById('cardAmount').value = '';
+      renderCardList();
+    }
+  }
+
+  // ─── DELETE ─────────────────────────────────────────────────────
+  function deleteEntry(id) {
+    appData.entries = appData.entries.filter(e => e.id !== id);
+    saveData(appData);
+    renderAll();
+    showToast('Entry removed.');
+  }
+
+  function deleteCardEntry(id) {
+    appData.cardEntries = appData.cardEntries.filter(e => e.id !== id);
+    saveData(appData);
+    renderCardList();
+    showToast('Card entry removed.');
+  }
+
+  // ─── RENDER ─────────────────────────────────────────────────────
+  function renderAll() {
+    renderDashboard();
+    renderLedger();
+    renderCardList();
+    renderDataSummary();
+  }
+
+  function renderDashboard() {
+    const opening = appData.openingBalance || 0;
+    const totalOut = appData.entries
+      .filter(e => e.type === 'expense')
+      .reduce((s, e) => s + e.amount, 0);
+    const totalIn = appData.entries
+      .filter(e => e.type === 'income')
+      .reduce((s, e) => s + e.amount, 0);
+    const remaining = opening + totalIn - totalOut;
+
+    document.getElementById('dashBalance').textContent = fmt(opening);
+    document.getElementById('dashSpent').textContent   = fmt(totalOut);
+    document.getElementById('dashRemain').textContent  = fmt(remaining);
+
+    const rc = document.getElementById('remainCard');
+    rc.classList.toggle('negative', remaining < 0);
+  }
+
+  function renderLedger() {
+    const list = document.getElementById('ledgerList');
+    const sorted = [...appData.entries].sort((a,b) => b.date.localeCompare(a.date));
+
+    if (sorted.length === 0) {
+      list.innerHTML = '<div class="empty-state">No entries yet. Add your first one above! 🌺</div>';
+      return;
+    }
+
+    list.innerHTML = sorted.map(e => `
+      <div class="entry-item">
+        <div class="entry-info">
+          <div class="entry-desc">${e.desc}<span class="cat-pill">${e.cat}</span></div>
+          <div class="entry-meta">${formatDate(e.date)}${e.notes ? ' · ' + e.notes : ''}</div>
         </div>
-        <div style="background:var(--border);border-radius:4px;height:6px;overflow:hidden">
-          <div style="background:${clr};width:${pct}%;height:100%;border-radius:4px;transition:width 0.4s"></div>
+        <div class="entry-actions">
+          <div class="entry-amount ${e.type}">${e.type === 'expense' ? '-' : '+'}${fmt(e.amount)}</div>
+          <button class="btn btn-danger btn-sm" onclick="deleteEntry(${e.id})">✕</button>
         </div>
-      </div>`;
-    }).join('');
-}
-
-// ══════════════════════════════════════
-// ACTIONS
-// ══════════════════════════════════════
-function saveOpeningBalance() {
-  const val = parseFloat(document.getElementById('openingBalance').value) || 0;
-  state.openingBalance = val;
-  saveState();
-}
-
-function todayStr() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function addIncome() {
-  const source = document.getElementById('incomeSource').value;
-  const amount = parseFloat(document.getElementById('incomeAmount').value);
-  const note   = document.getElementById('incomeNote').value.trim();
-  const date   = document.getElementById('incomeDate').value || todayStr();
-  if (!amount || amount <= 0) { alert('Please enter an amount.'); return; }
-  state.income.push({ source, amount, note, date });
-  document.getElementById('incomeAmount').value = '';
-  document.getElementById('incomeNote').value = '';
-  document.getElementById('incomeDate').value = '';
-  saveState();
-}
-
-function addExpense() {
-  const category = document.getElementById('expenseCategory').value;
-  const amount   = parseFloat(document.getElementById('expenseAmount').value);
-  const desc     = document.getElementById('expenseDesc').value.trim();
-  const date     = document.getElementById('expenseDate').value || todayStr();
-  if (!amount || amount <= 0) { alert('Please enter an amount.'); return; }
-  state.expenses.push({ category, amount, desc, date });
-  document.getElementById('expenseAmount').value = '';
-  document.getElementById('expenseDesc').value = '';
-  document.getElementById('expenseDate').value = '';
-  saveState();
-}
-
-function addCardItem() {
-  const desc     = document.getElementById('cardDesc').value.trim();
-  const amount   = parseFloat(document.getElementById('cardAmount').value);
-  const category = document.getElementById('cardCategory').value;
-  const date     = document.getElementById('cardDate').value || todayStr();
-  const notes    = document.getElementById('cardNotes').value.trim();
-  if (!desc) { alert('Please enter where / what.'); return; }
-  if (!amount || amount <= 0) { alert('Please enter an amount.'); return; }
-  state.cardItems.push({ desc, amount, category, date, notes });
-  document.getElementById('cardDesc').value = '';
-  document.getElementById('cardAmount').value = '';
-  document.getElementById('cardNotes').value = '';
-  document.getElementById('cardDate').value = '';
-  saveState();
-}
-
-function addResist() {
-  const urge    = document.getElementById('resistUrge').value.trim();
-  const instead = document.getElementById('resistInstead').value.trim();
-  if (!urge || !instead) { alert('Please fill in both fields.'); return; }
-  state.resistLog.push({ urge, instead, date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) });
-  document.getElementById('resistUrge').value = '';
-  document.getElementById('resistInstead').value = '';
-  saveState();
-}
-
-function deleteItem(listKey, idx) {
-  if (!confirm('Remove this entry?')) return;
-  state[listKey].splice(idx, 1);
-  saveState();
-}
-
-function confirmReset() {
-  if (confirm('Reset everything for a new month? Your opening balance will be cleared so you can set today\'s actual bank balance.')) {
-    state = { openingBalance: 0, income: [], expenses: [], cardItems: [], resistLog: [] };
-    saveState();
+      </div>
+    `).join('');
   }
-}
 
-// ══════════════════════════════════════
-// TABS
-// ══════════════════════════════════════
-function switchTab(name, el) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  if (el) el.classList.add('active');
-}
+  function renderCardList() {
+    const list = document.getElementById('cardList');
+    const sorted = [...appData.cardEntries].sort((a,b) => b.date.localeCompare(a.date));
+    const total = appData.cardEntries.reduce((s,e) => s + e.amount, 0);
 
-// ══════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════
-function fmt(n) {
-  return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
+    document.getElementById('cardTotal').textContent = fmt(total);
 
-// Month badge
-const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const now = new Date();
-document.getElementById('currentMonth').textContent = monthNames[now.getMonth()] + ' ' + now.getFullYear();
+    if (sorted.length === 0) {
+      list.innerHTML = '<div class="empty-state">No card purchases logged yet. 🃏</div>';
+      return;
+    }
 
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
-loadState();
+    list.innerHTML = sorted.map(e => `
+      <div class="entry-item">
+        <div class="entry-info">
+          <div class="entry-desc">${e.desc}</div>
+          <div class="entry-meta">${formatDate(e.date)}</div>
+        </div>
+        <div class="entry-actions">
+          <div class="entry-amount card">${fmt(e.amount)}</div>
+          <button class="btn btn-danger btn-sm" onclick="deleteCardEntry(${e.id})">✕</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderDataSummary() {
+    const ledgerCount = appData.entries.length;
+    const cardCount = appData.cardEntries.length;
+    const last = appData.lastExport
+      ? new Date(appData.lastExport).toLocaleDateString()
+      : 'Never';
+    document.getElementById('dataSummary').innerHTML =
+      `📒 <strong>${ledgerCount}</strong> ledger entries &nbsp;|&nbsp; 🃏 <strong>${cardCount}</strong> card entries<br>
+       Last export: <strong>${last}</strong>`;
+  }
+
+  // ─── EXPORT CSV ─────────────────────────────────────────────────
+  function exportCSV(type) {
+    const now = new Date();
+    const monthName = now.toLocaleString('default', { month: 'long', year: 'numeric' }).replace(' ', '-');
+
+    let rows, filename;
+
+    if (type === 'ledger') {
+      rows = [['Date','Type','Description','Category','Amount','Notes']];
+      appData.entries
+        .sort((a,b) => a.date.localeCompare(b.date))
+        .forEach(e => rows.push([e.date, e.type, e.desc, e.cat, e.amount.toFixed(2), e.notes || '']));
+      filename = `AuntyE-Ledger-${monthName}.csv`;
+    } else {
+      rows = [['Date','Description','Amount']];
+      appData.cardEntries
+        .sort((a,b) => a.date.localeCompare(b.date))
+        .forEach(e => rows.push([e.date, e.desc, e.amount.toFixed(2)]));
+      filename = `AuntyE-CardLog-${monthName}.csv`;
+    }
+
+    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+
+    appData.lastExport = now.toISOString();
+    saveData(appData);
+    renderDataSummary();
+    showToast('✅ CSV downloaded!');
+  }
+
+  // ─── RESET ──────────────────────────────────────────────────────
+  function showResetModal()  { document.getElementById('resetModal').classList.add('show'); }
+  function closeResetModal() { document.getElementById('resetModal').classList.remove('show'); }
+
+  function confirmReset() {
+    appData = defaultData();
+    saveData(appData);
+    closeResetModal();
+    document.getElementById('balanceInput').value = '';
+    renderAll();
+    showToast('🔄 Reset! Enter your new opening balance.');
+  }
+
+  // ─── TABS ───────────────────────────────────────────────────────
+  function showTab(name) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+    if (name === 'export') renderDataSummary();
+  }
+
+  // ─── HELPERS ────────────────────────────────────────────────────
+  function fmt(n) {
+    return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function formatDate(d) {
+    const [y,m,day] = d.split('-');
+    return new Date(y, m-1, day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ─── GO ─────────────────────────────────────────────────────────
+  init();
 </script>
 </body>
 </html>
